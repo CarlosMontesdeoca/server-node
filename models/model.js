@@ -1,8 +1,6 @@
 const mongoose = require('mongoose');
 
-const { Schema } = mongoose;
-
-const QuoterSchema = new mongoose.Schema({
+const dataSchema = new mongoose.Schema({
     N_offert: { type: String }, 
     advisor: { type: String }, 
     ruc: { type: String }, 
@@ -15,9 +13,6 @@ const QuoterSchema = new mongoose.Schema({
     services: { type: Array },
     products: { type: Array },
     state: {type: String}
-}, {
-    timestamps: true,
-    versionKey: false
-});
+})
 
-module.exports = mongoose.model('cotizador', QuoterSchema);
+module.exports = mongoose.model('Data', dataSchema)

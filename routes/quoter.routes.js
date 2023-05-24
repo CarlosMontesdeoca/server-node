@@ -1,68 +1,53 @@
-const express = require("express");
-const router = express.Router();
-
+const express = require('express');
 const Quoter = require("../models/quoter.model");
-// const { verifyToken, isSistem } = require('../middlewares/authjwt');  data.client === req.params.id
 
-router.get("/", (req, res) => {
-  Quoter.find().then((allQuoters) => res.json(allQuoters));
-});
+const router = express.Router()
 
-router.post("/", async (req, res) => {
-
-    const { advisor } = req.body
-    let newData = new Quoter ({
-        advisor
+//Post Method
+router.post('/post', (req, res) => {
+    const data = new Quoter({
+        N_offert: req.body.N_offert,
+        advisor: req.body.advisor,
+        ruc: req.body.ruc,
+        client: req.body.client,
+        plant: req.body.plant,
+        address: req.body.address,
+        contact: req.body.contact,
+        email: req.body.email,
+        phone: req.body.phone,
+        services: req.body.services,
+        products: req.body.products,
+        state: req.body.state,
     })
+    
+    try {
+        const dataToSave = data.save();
+        res.status(200).json(dataToSave)
+    }
+    catch (error) {
+        res.status(400).json({message: error.message})
+    }
+    // res.send('Post API')
+})
 
-    newData.save().then(newData => {
-        res.send(newData)
-    }). catch( error => {
-        console.log(error)
-    })
+//Get all Method
+router.get('/getAll', (req, res) => {
+    res.send('Get All API')
+})
 
-    // res.json({ status: "planta ingresada" });
-});
+//Get by ID Method
+router.get('/getOne/:id', (req, res) => {
+    res.send(req.params.id)
+})
 
-// router.get('/:id', async (req, res) => {
-//     const Plants = await Plant.find();
-//     let dataPlant = Plants.filter(data => data.client == req.params.id)
-//         // console.log(data.client)
-//         console.log(dataPlant)
-//     res.json(dataPlant);
-// })
+//Update by ID Method
+router.put('/update/:id', (req, res) => {
+    res.send('Update by ID API')
+})
 
-// router.put('/:id', async (req, res) => {
-
-//     const { city, cost, address, typ, plant, edited } = req.body;
-//     const newPlant  = { city, cost, address, typ, plant, edited };
-//     console.log(req.params.id);
-
-//     await Plant.findByIdAndUpdate(req.params.id, newPlant);
-
-//     res.json({ status: 'planta actualizada'});
-
-// })
-
-// router.put('/:id/contacts', async (req, res) => {
-//     try {
-//         const { contacts } = req.body;
-//         const newClient  = { contacts };
-//         console.log(req.params.id);
-
-//         await Plant.findByIdAndUpdate(req.params.id, newClient);
-
-//         res.json({ status: 'contacto agregado'});
-//     } catch (error) {
-//         return error
-//     }
-// })
-
-// router.delete('/:id', async (req, res) => {
-
-//     await Plant.findByIdAndDelete(req.params.id);
-//     res.json({ status: 'Cliente eliminado' })
-
-// })
+//Delete by ID Method
+router.delete('/delete/:id', (req, res) => {
+    res.send('Delete by ID API')
+})
 
 module.exports = router;
