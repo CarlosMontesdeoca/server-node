@@ -24,7 +24,7 @@ database.once('connected', () => {
 
 const app = express();
 
-app.use('/api', quoters)
+app.use('/api/quoters', quoters)
 
 app.use(express.json());
 
