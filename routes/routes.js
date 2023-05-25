@@ -1,7 +1,9 @@
 const express = require('express');
 const Model = require('../models/model');
 const router = express.Router();
+const moment = require('moment')
 
+const today = moment().startOf('day')
 const year = new Date().getFullYear();
 //Post Method
 router.post('/', async (req, res) => {
@@ -16,10 +18,15 @@ router.post('/', async (req, res) => {
 })
 
 //Get all Method
-router.get('/quoters/advisor/:advisor', async (req, res) => {
+router.get('/advisor/:advisor/:year', async (req, res) => {
     try {
-        // res.send(req.params)
-        const data = await Model.find({advisor: req.params.advisor});
+        const data = await Model.find({
+            advisor: req.params.advisor,
+            createdAt: {
+                $gte: new Date(req.params.year, 1, 1),
+                $lte: new Date(req.params.year, 12, 1)
+            }
+          });
         res.json(data)
     }
     catch (error) {
@@ -27,19 +34,19 @@ router.get('/quoters/advisor/:advisor', async (req, res) => {
     }
 })
 
-router.get('/quoters/count/:advisor', async (req, res) => {
-    // try {
-        res.send(year)
-    //     const data = await Model.find();
-    //     res.json(data)
-    // }
-    // catch (error) {
-    //     res.status(500).json({ message: error.message })
-    // }
-})
+// router.get('/quoters/count/:advisor', async (req, res) => {
+//     // try {
+//         res.send(year)
+//     //     const data = await Model.find();
+//     //     res.json(data)
+//     // }
+//     // catch (error) {
+//     //     res.status(500).json({ message: error.message })
+//     // }
+// })
 
 //Get by ID Method
-router.get('/getOne/:id', async (req, res) => {
+router.get('/:id', async (req, res) => {
     try {
         const data = await Model.findById(req.params.id);
         res.json(data)
