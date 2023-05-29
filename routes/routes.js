@@ -5,9 +5,28 @@ const moment = require('moment')
 
 const today = moment().startOf('day')
 const year = new Date().getFullYear();
+
+const createN_offert = (user, loc, count) => {
+    let aux = ''
+    user.split(' ').forEach(val => 
+        aux += val[0]    
+    )
+    const offert = `${aux}-${loc+year}-${count+1}`
+    return offert
+}
 //Post Method
 router.post('/', async (req, res) => {
+    
+    const count = await Model.find({
+        advisor: req.body.advisor,
+        createdAt: {
+            $gte: new Date(year, 1, 1),
+            $lte: new Date(year, 12, 1)
+        }
+    });
+    const cod = createN_offert(req.body.advisor, req.body.loc, count.length)
     const data = new Model(req.body)
+    data.N_offert = cod
     try {
         const dataToSave = await data.save();
         res.status(200).json(dataToSave)
