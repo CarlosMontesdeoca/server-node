@@ -3,7 +3,7 @@ const Model = require('../models/model');
 const router = express.Router();
 const moment = require('moment')
 
-const today = moment().startOf('day')
+// const today = moment().startOf('day')
 const year = new Date().getFullYear();
 
 const createN_offert = (user, loc, count) => {
@@ -11,10 +11,10 @@ const createN_offert = (user, loc, count) => {
     user.split(' ').forEach(val => 
         aux += val[0]    
     )
-    const offert = `${aux}-${loc+year}-${count+1}`
+    const offert = `${aux}-${loc+year}-${(count+1).toString().padStart(3,'0')}`
     return offert
 }
-//Post Method
+//Metodo para crear una nueva cotizacion
 router.post('/', async (req, res) => {
     
     const count = await Model.find({
@@ -36,7 +36,7 @@ router.post('/', async (req, res) => {
     }
 })
 
-//Get all Method
+//Metodo para encontrar las cotizaciones de un asesor por año.
 router.get('/advisor/:advisor/:year', async (req, res) => {
     try {
         const data = await Model.find({
@@ -53,18 +53,8 @@ router.get('/advisor/:advisor/:year', async (req, res) => {
     }
 })
 
-// router.get('/quoters/count/:advisor', async (req, res) => {
-//     // try {
-//         res.send(year)
-//     //     const data = await Model.find();
-//     //     res.json(data)
-//     // }
-//     // catch (error) {
-//     //     res.status(500).json({ message: error.message })
-//     // }
-// })
+//Metodo para obtener una cotizacion por individual
 
-//Get by ID Method
 router.get('/:id', async (req, res) => {
     try {
         const data = await Model.findById(req.params.id);
@@ -104,5 +94,17 @@ router.delete('/delete/:id', async (req, res) => {
         res.status(400).json({ message: error.message })
     }
 })
+
+// router.get('/:quoter', async (req, res) => {
+//     try {
+//         const data = await Model.find({
+//             N_offert: new RegExp(req.params.quoter, 'i')
+//           });
+//         res.json(data)
+//     }
+//     catch (error) {
+//         res.status(500).json({ message: error.message })
+//     }
+// })
 
 module.exports = router;

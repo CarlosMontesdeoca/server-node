@@ -15,6 +15,7 @@ const QuoterSchema = new mongoose.Schema({
     bals: { type: Array },
     services: { type: Array },
     products: { type: Array },
+    comments: { type: Array },
     pay: { type: String },
     validity: { type: Number, default: 15 },
     state: {type: String, default: 'A' }
