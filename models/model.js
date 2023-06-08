@@ -3,6 +3,8 @@ const mongoose = require('mongoose');
 const QuoterSchema = new mongoose.Schema({
     N_offert: { type: String, unique: true, required: true }, 
     advisor: { type: String, required: true }, 
+    phone_adv: { type: String, required: true },  
+    email_adv: { type: String, required: true },
     ruc: { type: String, required: true }, 
     client: { type: String, required: true },
     id_plant: { type: Number, required: true },
