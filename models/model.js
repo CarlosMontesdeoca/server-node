@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 
 const QuoterSchema = new mongoose.Schema({
     N_offert: { type: String, unique: true, required: true }, 
+    reference: { type: String, required: true },
     advisor: { type: String, required: true }, 
     phone_adv: { type: String, required: true },  
     email_adv: { type: String, required: true },
@@ -14,7 +15,7 @@ const QuoterSchema = new mongoose.Schema({
     contact: { type: String, required: true },
     email: { type: String, required: true }, 
     phone: { type: String, required: true },
-    bals: { type: Array },
+    balances: { type: Array },
     services: { type: Array },
     products: { type: Array },
     comments: { type: Array },

@@ -38,9 +38,10 @@ router.post('/', async (req, res) => {
 
 //Metodo para encontrar las cotizaciones de un asesor por año.
 router.get('/advisor/:advisor/:year', async (req, res) => {
+    adv = req.params.advisor.replace('_', ' ')
     try {
         const data = await Model.find({
-            advisor: req.params.advisor,
+            advisor: adv,
             createdAt: {
                 $gte: new Date(req.params.year, 1, 1),
                 $lte: new Date(req.params.year, 12, 1)
