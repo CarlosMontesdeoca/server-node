@@ -19,12 +19,13 @@ const QuoterSchema = new mongoose.Schema({
     services: { type: Array },
     products: { type: Array },
     comments: { type: Array },
+    observations: { type: Array },
     pay: { type: String },
     validity: { type: Number, default: 15 },
-    state: {type: String, default: 'A' }
+    state: {type: String, default: 'C' },
+    version: {type: Number, default: 1 }
 }, {
-    timestamps: true,
-    versionKey: false
+    timestamps: true
 });
 
 module.exports = mongoose.model('quoter', QuoterSchema);
