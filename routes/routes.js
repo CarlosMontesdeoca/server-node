@@ -68,11 +68,21 @@ router.get("/pending", async (req, res) => {
 });
 
 //Metodo para obtener una cotizacion por individual
-
 router.get("/:id", async (req, res) => {
   try {
     const data = await Model.findById(req.params.id);
     res.json(data);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+router.get("/find/:N_offert", async (req, res) => {
+  try {
+    const data = await Model.find({
+      N_offert: req.params.N_offert
+    });
+    res.json(data[0]);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

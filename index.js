@@ -23,5 +23,5 @@ const routes = require('./routes/routes');
 app.use('/api/quoters', routes)
 
 app.listen(8080, () => {
-    console.log(`Server Started at ${3000}`)
+    console.log(`Server Started at ${8080}`)
 })
