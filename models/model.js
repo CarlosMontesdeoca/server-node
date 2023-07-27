@@ -22,7 +22,7 @@ const QuoterSchema = new mongoose.Schema({
     observations: { type: Array },
     pay: { type: String },
     validity: { type: Number, default: 15 },
-    state: {type: String, default: 'A' },
+    state: {type: String, default: 'C' },
     version: {type: Number, default: 1 }
 }, {
     timestamps: true
