@@ -7,9 +7,7 @@ const moment = require("moment");
 const year = new Date().getFullYear();
 
 const createN_offert = (user, loc, count) => {
-  let aux = "";
-  user.split(" ").forEach((val) => (aux += val[0]));
-  const offert = `${aux}-${loc + year}-${(count + 1)
+  const offert = `${user}-${loc + year}-${(count + 1)
     .toString()
     .padStart(3, "0")}`;
   return offert;
@@ -23,7 +21,7 @@ router.post("/", async (req, res) => {
       $lte: new Date(year, 12, 1),
     },
   });
-  const cod = createN_offert(req.body.advisor, req.body.loc, count.length);
+  const cod = createN_offert(req.body.cod, req.body.loc, count.length);
   const data = new Model(req.body);
   data.N_offert = cod;
   try {
