@@ -50,14 +50,13 @@ router.get("/advisor/:advisor/:year", async (req, res) => {
 });
 
 //Metodo para encontrar las cotizaciones para aprovar.
-router.get("/pending", async (req, res) => {
+router.get("/all/:year", async (req, res) => {
   try {
     const data = await Model.find({
-      state: "C",
-      // createdAt: {
-      //     $gte: new Date(req.params.year, 1, 1),
-      //     $lte: new Date(req.params.year, 12, 1)
-      // }
+      createdAt: {
+          $gte: new Date(req.params.year, 1, 1),
+          $lte: new Date(req.params.year, 12, 1)
+      }
     });
     res.json(data);
   } catch (error) {
