@@ -16,6 +16,7 @@ const QuoterSchema = new mongoose.Schema({
     email: { type: String, required: true }, 
     phone: { type: String, required: true },
     balances: { type: Array },
+    weigths: { type: Array },
     services: { type: Array },
     products: { type: Array },
     comments: { type: Array },
