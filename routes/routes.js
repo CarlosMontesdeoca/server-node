@@ -42,7 +42,7 @@ router.get("/advisor/:advisor/:year", async (req, res) => {
         $gte: new Date(req.params.year, 1, 1),
         $lte: new Date(req.params.year, 12, 1),
       },
-    });
+    }).sort({ createdAt: -1 });
     res.json(data);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -57,7 +57,7 @@ router.get("/all/:year", async (req, res) => {
           $gte: new Date(req.params.year, 1, 1),
           $lte: new Date(req.params.year, 12, 1)
       }
-    });
+    }).sort({ createdAt: -1 });
     res.json(data);
   } catch (error) {
     res.status(500).json({ message: error.message });
