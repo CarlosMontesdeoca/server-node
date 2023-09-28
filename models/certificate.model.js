@@ -1,15 +1,15 @@
 const mongoose = require('mongoose');
 
 const CertificateSchema = new mongoose.Schema({
-    __motor: { type: String, required: true }, 
-    __trazabilidad: { type: String, required: true },
-    __comentario: { type: String, required: true }, 
-    __fecha_de_cracion: { type: String, required: true },  
+    __motor: { type: Number, default: 11 }, 
+    __trazabilidad: { type: String, default: null },
+    __comentario: { type: String, default: null }, 
+    __fecha_de_creacion: { type: String, required: true },  
     Tipo: { type: String, required: true },
     Clase: { type: String },
     Nombre_certificado: { type: String, unique: true, required: true }, 
     Fecha_calibracion: { type: String, required: true },
-    Proxima_expiracion: { type: Number, required: true },
+    Proxima_expiracion: { type: String, required: true },
     Proxima_calibracion: { type: String, required: true },
     Idebtificacion: { type: String },
     Ubicacion: {
@@ -20,7 +20,9 @@ const CertificateSchema = new mongoose.Schema({
     },
     Marca: { type: String },
     Modelo: { type: String },
-    Juego: { type:Object }
-});
+    juego: { type: Object },
+    temp: { type: Object },
+    hum: { type: Object }
+}, {versionKey: false });
 
 module.exports = mongoose.model('certificate', CertificateSchema);
