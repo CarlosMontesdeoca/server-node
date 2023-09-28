@@ -21,9 +21,11 @@ app.use(cors())
 app.use(express.json({ limit: '20mb' }));
 app.use(express.urlencoded({ limit: '20mb', extended: true }));
 
-const routes = require('./routes/routes');
+const routesQuoter = require('./routes/quoter.routes');
+const routesCertif = require('./routes/certificates.routes.js');
 
-app.use('/api/quoters', routes)
+app.use('/api/quoters', routesQuoter)
+app.use('/api/certificates', routesCertif)
 
 app.listen(8080, () => {
     console.log(`Server Started at ${8080}`)
