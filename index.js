@@ -22,7 +22,7 @@ app.use(express.json({ limit: '20mb' }));
 app.use(express.urlencoded({ limit: '20mb', extended: true }));
 
 const routesQuoter = require('./routes/quoter.routes');
-const routesCertif = require('./routes/certificates.routes.js');
+const routesCertif = require('./routes/certificates.routes');
 
 app.use('/api/quoters', routesQuoter)
 app.use('/api/certificates', routesCertif)

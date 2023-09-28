@@ -1,7 +1,6 @@
 const express = require("express");
-const Model = require("../models/model");
+const Model = require("../models/quoter.model");
 const router = express.Router();
-const moment = require("moment");
 
 // const today = moment().startOf('day')
 const year = new Date().getFullYear();
