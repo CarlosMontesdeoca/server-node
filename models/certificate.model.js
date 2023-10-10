@@ -11,7 +11,7 @@ const CertificateSchema = new mongoose.Schema({
     Fecha_calibracion: { type: String, required: true },
     Proxima_expiracion: { type: String, required: true },
     Proxima_calibracion: { type: String, required: true },
-    Idebtificacion: { type: String },
+    Idetificacion: { type: String },
     Ubicacion: {
         UIO: {type: Boolean},
         GYE: {type: Boolean},

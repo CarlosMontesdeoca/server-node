@@ -31,7 +31,7 @@ router.post("/", async (req, res) => {
 });
 
 //Metodo para encontrar las cotizaciones para aprovar.
-router.get("/all/:year", async (req, res) => {
+router.get("/:year", async (req, res) => {
   try {
     const data = await Model.find({
       createdAt: {
