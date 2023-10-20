@@ -113,6 +113,25 @@ router.put("/update/:id", async (req, res) => {
 //   }
 });
 
+router.put("/active/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const updatedData = {
+      state: 'C'
+    };
+
+    const result = await Model.findByIdAndUpdate(id, updatedData, { new: true });
+
+    if (!result) {
+      return res.status(404).json({ message: 'Elemento no encontrado' });
+    }
+
+    res.json(result);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
 
 //Delete by ID Method
 router.delete("/delete/:id", async (req, res) => {
