@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "pm2 start index.js",
+    "start": "pm2 start index.js --name Cotizador",
     "dev": "nodemon index.js"
   },
   "author": "",
@@ -15,6 +15,7 @@
     "express": "^4.17.3",
     "moment": "^2.29.4",
     "mongoose": "^6.2.2",
-    "nodemon": "^2.0.15"
+    "nodemon": "^2.0.15",
+    "pm2": "^5.3.0"
   }
 }
