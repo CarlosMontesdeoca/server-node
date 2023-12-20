@@ -27,6 +27,7 @@ const QuoterSchema = new mongoose.Schema({
     disc: { type: Number },
     validity: { type: Number, default: 15 },
     doc: { type: Number, default: 1 },
+    pmp: { type: Boolean, default: false },
     state: {type: String, default: 'C' },
     version: {type: Number, default: 1 }
 }, {
