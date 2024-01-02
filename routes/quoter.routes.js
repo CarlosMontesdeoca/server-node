@@ -33,17 +33,27 @@ router.post("/", async (req, res) => {
 
 //Metodo para encontrar las cotizaciones de un asesor por año.
 router.get("/advisor/:advisor/:year", async (req, res) => {
-  adv = req.params.advisor.replace("_", " ");
+  const adv = req.params.advisor.replace("_", " ");
   try {
+    const startDate = new Date(req.params.year, 0, 1); // Inicio del año
+    const endDate = new Date(req.params.year, 11, 31, 23, 59, 59); // Fin del año
+
+    console.log("Fecha de inicio:", startDate);
+    console.log("Fecha de fin:", endDate);
+
     const data = await Model.find({
       advisor: adv,
       createdAt: {
-        $gte: new Date(req.params.year, 1, 1),
-        $lte: new Date(req.params.year, 12, 1),
+        $gte: startDate,
+        $lte: endDate,
       },
     }).sort({ createdAt: -1 });
+
+    console.log("Cotizaciones encontradas:", data.length);
+
     res.json(data);
   } catch (error) {
+    console.error("Error al buscar cotizaciones:", error.message);
     res.status(500).json({ message: error.message });
   }
 });
