@@ -42,11 +42,14 @@ router.get("/advisor/:advisor/:year", async (req, res) => {
     console.log("Fecha de fin:", endDate);
 
     const data = await Model.find({
-      advisor: adv,
-      createdAt: {
-        $gte: startDate,
-        $lte: endDate,
-      },
+      $and: [
+        {
+          $or: [
+            { advisor: adv, createdAt: { $gte: startDate, $lte: endDate } },
+            { advisor: adv, state: 'C' },
+          ],
+        },
+      ],
     }).sort({ createdAt: -1 });
 
     console.log("Cotizaciones encontradas:", data.length);
