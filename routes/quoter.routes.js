@@ -35,11 +35,8 @@ router.post("/", async (req, res) => {
 router.get("/advisor/:advisor/:year", async (req, res) => {
   const adv = req.params.advisor.replace("_", " ");
   try {
-    const startDate = new Date(req.params.year, 0, 1); // Inicio del año
-    const endDate = new Date(req.params.year, 11, 31, 23, 59, 59); // Fin del año
-
-    console.log("Fecha de inicio:", startDate);
-    console.log("Fecha de fin:", endDate);
+    const startDate = new Date(req.params.year, 0, 1);
+    const endDate = new Date(req.params.year, 11, 31, 23, 59, 59);
 
     const data = await Model.find({
       $and: [
@@ -63,12 +60,18 @@ router.get("/advisor/:advisor/:year", async (req, res) => {
 
 //Metodo para encontrar las cotizaciones para aprovar.
 router.get("/all/:year", async (req, res) => {
+  const startDate = new Date(req.params.year, 0, 1);
+  const endDate = new Date(req.params.year, 11, 31, 23, 59, 59);
   try {
     const data = await Model.find({
-      createdAt: {
-          $gte: new Date(req.params.year, 1, 1),
-          $lte: new Date(req.params.year, 12, 1)
-      }
+      $and: [
+        {
+          $or: [
+            { createdAt: { $gte: startDate, $lte: endDate } },
+            { state: 'C' },
+          ],
+        },
+      ],
     }).sort({ createdAt: -1 });
     res.json(data);
   } catch (error) {
