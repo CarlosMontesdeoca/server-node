@@ -42,12 +42,12 @@ router.get("/advisor/:advisor/:year", async (req, res) => {
       $and: [
         {
           $or: [
-            { advisor: adv, createdAt: { $gte: startDate, $lte: endDate } },
+            { advisor: adv, updatedAt: { $gte: startDate, $lte: endDate } },
             { advisor: adv, state: 'C' },
           ],
         },
       ],
-    }).sort({ createdAt: -1 });
+    }).sort({ updatedAt: -1 });
 
     console.log("Cotizaciones encontradas:", data.length);
 
@@ -67,12 +67,12 @@ router.get("/all/:year", async (req, res) => {
       $and: [
         {
           $or: [
-            { createdAt: { $gte: startDate, $lte: endDate } },
+            { updatedAt: { $gte: startDate, $lte: endDate } },
             { state: 'C' },
           ],
         },
       ],
-    }).sort({ createdAt: -1 });
+    }).sort({ updatedAt: -1 });
     res.json(data);
   } catch (error) {
     res.status(500).json({ message: error.message });
