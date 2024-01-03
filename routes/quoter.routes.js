@@ -15,10 +15,7 @@ const createN_offert = (user, loc, count) => {
 router.post("/", async (req, res) => {
   const count = await Model.find({
     advisor: req.body.advisor,
-    createdAt: {
-      $gte: new Date(year, 1, 1),
-      $lte: new Date(year, 12, 1),
-    },
+    N_offert: { $regex: /2024/ },
   });
   const cod = createN_offert(req.body.cod, req.body.loc, count.length);
   const data = new Model(req.body);
