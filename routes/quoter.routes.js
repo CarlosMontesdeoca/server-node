@@ -15,10 +15,7 @@ const createN_offert = (user, loc, count) => {
 router.post("/", async (req, res) => {
   const count = await Model.find({
     advisor: req.body.advisor,
-    createdAt: {
-      $gte: new Date(year, 1, 1),
-      $lte: new Date(year, 12, 1),
-    },
+    N_offert: { $regex: /2024/ },
   });
   const cod = createN_offert(req.body.cod, req.body.loc, count.length);
   const data = new Model(req.body);
@@ -35,22 +32,19 @@ router.post("/", async (req, res) => {
 router.get("/advisor/:advisor/:year", async (req, res) => {
   const adv = req.params.advisor.replace("_", " ");
   try {
-    const startDate = new Date(req.params.year, 0, 1); // Inicio del año
-    const endDate = new Date(req.params.year, 11, 31, 23, 59, 59); // Fin del año
-
-    console.log("Fecha de inicio:", startDate);
-    console.log("Fecha de fin:", endDate);
+    const startDate = new Date(req.params.year, 0, 1);
+    const endDate = new Date(req.params.year, 11, 31, 23, 59, 59);
 
     const data = await Model.find({
       $and: [
         {
           $or: [
-            { advisor: adv, createdAt: { $gte: startDate, $lte: endDate } },
+            { advisor: adv, updatedAt: { $gte: startDate, $lte: endDate } },
             { advisor: adv, state: 'C' },
           ],
         },
       ],
-    }).sort({ createdAt: -1 });
+    }).sort({ updatedAt: -1 });
 
     console.log("Cotizaciones encontradas:", data.length);
 
@@ -63,13 +57,19 @@ router.get("/advisor/:advisor/:year", async (req, res) => {
 
 //Metodo para encontrar las cotizaciones para aprovar.
 router.get("/all/:year", async (req, res) => {
+  const startDate = new Date(req.params.year, 0, 1);
+  const endDate = new Date(req.params.year, 11, 31, 23, 59, 59);
   try {
     const data = await Model.find({
-      createdAt: {
-          $gte: new Date(req.params.year, 1, 1),
-          $lte: new Date(req.params.year, 12, 1)
-      }
-    }).sort({ createdAt: -1 });
+      $and: [
+        {
+          $or: [
+            { updatedAt: { $gte: startDate, $lte: endDate } },
+            { state: 'C' },
+          ],
+        },
+      ],
+    }).sort({ updatedAt: -1 });
     res.json(data);
   } catch (error) {
     res.status(500).json({ message: error.message });
