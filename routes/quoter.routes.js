@@ -157,16 +157,14 @@ router.delete("/delete/:id", async (req, res) => {
   }
 });
 
-// router.get('/:quoter', async (req, res) => {
-//     try {
-//         const data = await Model.find({
-//             N_offert: new RegExp(req.params.quoter, 'i')
-//           });
-//         res.json(data)
-//     }
-//     catch (error) {
-//         res.status(500).json({ message: error.message })
-//     }
-// })
+router.put('/test', async (req, res) => {
+    try {
+      console.log(req.body)
+        res.status(200).json('data')
+    }
+    catch (error) {
+        res.status(500).json({ message: error.message })
+    }
+})
 
 module.exports = router;
