@@ -5,8 +5,8 @@ const router = express.Router();
 // const today = moment().startOf('day')
 const year = new Date().getFullYear();
 
-const createN_offert = (user, loc, count) => {
-  const offert = `${user}-${loc + year}-${(count + 1)
+const createN_offert = (pmp, user, loc, count) => {
+  const offert = `${user}-${((pmp)  ? 'PMP-' : '') + loc + year}-${(count + 1)
     .toString()
     .padStart(3, "0")}`;
   return offert;
@@ -16,13 +16,14 @@ router.post("/", async (req, res) => {
   const count = await Model.find({
     advisor: req.body.advisor,
     N_offert: { $regex: /2024/ },
+    pmp: req.body.pmp
   });
-  const cod = createN_offert(req.body.cod, req.body.loc, count.length);
+  const cod = createN_offert(req.body.pmp, req.body.cod, req.body.loc, count.length);
   const data = new Model(req.body);
   data.N_offert = cod;
   try {
     const dataToSave = await data.save();
-    res.status(200).json(dataToSave);
+    res.status(230).json(dataToSave);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
