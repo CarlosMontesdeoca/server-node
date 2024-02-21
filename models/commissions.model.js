@@ -4,7 +4,7 @@ const QuoterSchema = new mongoose.Schema({
     N_offert: { type: String, unique: true, required: true }, 
     reference: { type: String, required: true },
     advisor: { type: String, required: true }, 
-    phone_adv: { type: String, required: true },  
+    phone_adv: { type: String, reuired: true },  
     email_adv: { type: String, required: true },
     ruc: { type: String, required: true }, 
     client: { type: String, required: true },
@@ -26,11 +26,12 @@ const QuoterSchema = new mongoose.Schema({
     pay: { type: String },
     disc: { type: Number },
     validity: { type: Number, default: 15 },
-    doc: { type: Number, default: 1 },
+    doc: { type: Number, default: 2 },
+    pmp: { type: Boolean, default: false },
     state: {type: String, default: 'C' },
     version: {type: Number, default: 1 }
 }, {
     timestamps: true
 });
 
-module.exports = mongoose.model('quoter', QuoterSchema);
+module.exports = mongoose.model('commissions', QuoterSchema);

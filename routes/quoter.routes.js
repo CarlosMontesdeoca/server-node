@@ -9,8 +9,9 @@ const createN_offert = (pmp, user, loc, count) => {
   const offert = `${user}-${((pmp)  ? 'PMP-' : '') + loc + year}-${(count + 1)
     .toString()
     .padStart(3, "0")}`;
-  return offert;
-};
+  return offert
+}
+
 //Metodo para crear una nueva cotizacion
 router.post("/", async (req, res) => {
   const count = await Model.find({
@@ -98,6 +99,28 @@ router.get("/find/:N_offert", async (req, res) => {
   }
 });
 
+router.get('/services/:N_offert', async (req, res) => {
+  try {
+    const data = await Model.find({
+      N_offert: req.params.N_offert
+    });
+    res.json([data[0].disc, data[0].services]);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+})
+
+router.get('/services/:N_offert', async (req, res) => {
+  try {
+    const data = await Model.find({
+      N_offert: req.params.N_offert
+    });
+    res.json(data[0].services)
+  } catch (error) {
+    res.status(500).json({ message: error.message })
+  }
+})
+
 //Update by ID Method
 router.put("/update/:id", async (req, res) => {
     try {
@@ -158,14 +181,5 @@ router.delete("/delete/:id", async (req, res) => {
   }
 });
 
-router.put('/test', async (req, res) => {
-    try {
-      console.log(req.body)
-        res.status(200).json('data')
-    }
-    catch (error) {
-        res.status(500).json({ message: error.message })
-    }
-})
 
 module.exports = router;
