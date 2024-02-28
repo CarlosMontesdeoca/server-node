@@ -104,7 +104,7 @@ router.get('/services/:N_offert', async (req, res) => {
     const data = await Model.find({
       N_offert: req.params.N_offert
     });
-    res.json([data[0].disc, data[0].services]);
+    res.json([data[0].disc ? data[0].disc : 0, data[0].services]);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
