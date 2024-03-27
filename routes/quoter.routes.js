@@ -48,8 +48,6 @@ router.get("/advisor/:advisor/:year", async (req, res) => {
       ],
     }).sort({ updatedAt: -1 });
 
-    console.log("Cotizaciones encontradas:", data.length);
-
     res.json(data);
   } catch (error) {
     console.error("Error al buscar cotizaciones:", error.message);
@@ -138,17 +136,6 @@ router.put("/update/:id", async (req, res) => {
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
-//   try {
-//     const id = req.params.id;
-//     // const updatedData = req.body;
-//     // const options = { new: true };
-
-//     const data = await Model.findByIdAndUpdate(id);
-
-//     res.json(data);
-//   } catch (error) {
-//     res.status(500).json({ message: error.message });
-//   }
 });
 
 router.put("/active/:id", async (req, res) => {
@@ -170,7 +157,6 @@ router.put("/active/:id", async (req, res) => {
   }
 });
 
-
 //Delete by ID Method
 router.delete("/delete/:id", async (req, res) => {
   try {
@@ -182,5 +168,33 @@ router.delete("/delete/:id", async (req, res) => {
   }
 });
 
+router.get("/test-servicios/:year", async (req, res) => {
+  const startDate = new Date(req.params.year, 0, 1);
+  const endDate = new Date(req.params.year, 11, 31, 23, 59, 59);
+  try {
+    const data = await Model.find({
+      $and: [
+        {
+          $or: [
+            { updatedAt: { $gte: startDate, $lte: endDate } },
+            { state: 'A' },
+          ],
+        },
+      ],
+    }).sort({ updatedAt: -1 });
+  let extractedServices = []
+  data.map(record => record.services.forEach(dt => {
+    dt.advisor = record.advisor;
+    dt.disc = record.disc;
+    
+    extractedServices = extractedServices.concat(dt);
+  }))
+  
+
+  res.json(extractedServices);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+})
 
 module.exports = router;
