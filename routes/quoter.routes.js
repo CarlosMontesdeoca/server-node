@@ -168,7 +168,7 @@ router.delete("/delete/:id", async (req, res) => {
   }
 });
 
-router.get("/test-servicios/:year", async (req, res) => {
+router.get("/bi-servicios/:year", async (req, res) => {
   const startDate = new Date(req.params.year, 0, 1);
   const endDate = new Date(req.params.year, 11, 31, 23, 59, 59);
   try {
