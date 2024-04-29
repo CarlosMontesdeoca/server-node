@@ -40,8 +40,11 @@ router.get("/servicios/:year", async (req, res) => {
     }).sort({ updatedAt: -1 });
   let extractedServices = []
   data.map(record => record.services.forEach(dt => {
+    dt.N_offert = record.N_offert;
     dt.advisor = record.advisor;
     dt.disc = record.disc;
+    dt.createdAt = record.createdAt;
+    dt.updatedAt = record.updatedAt;
     
     extractedServices = extractedServices.concat(dt);
   }))
